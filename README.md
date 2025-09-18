@@ -26,6 +26,8 @@ weather-app
 
 ## Setup Instructions
 
+### Method 1: Run with Docker
+
 1. **Clone the Repository**:
    Clone this repository to your local machine using:
    ```
@@ -52,6 +54,55 @@ weather-app
 
 5. **Access the Application**:
    Open your web browser and navigate to `http://localhost:8080` to view the weather application.
+
+### Method 2: Run with Kubernetes (Minikube)
+
+1. **Clone the Repository and Navigate to Project Directory**:
+   ```
+   git clone <repository-url>
+   cd weather-app
+   ```
+
+2. **Start Minikube**:
+   ```
+   minikube delete --all
+   minikube start --driver=docker
+   ```
+
+3. **Check Cluster Status**:
+   ```
+   minikube status
+   kubectl get nodes
+   ```
+
+4. **Enable Minikube to Use Local Docker Images**:
+   ```
+   minikube -p minikube docker-env | Invoke-Expression
+   ```
+
+5. **Build Local Docker Image**:
+   ```
+   docker build -t weather-app:1.0 .
+   ```
+
+6. **Apply Kubernetes Manifests**:
+   ```
+   kubectl apply -f k8s/deployment.yaml
+   kubectl apply -f k8s/service.yaml
+   kubectl apply -f k8s/ingress.yaml
+   ```
+
+7. **Access the Service**:
+   ```
+   minikube service weather-app-service
+   ```
+
+   Or if using ingress, update `/etc/hosts` with:
+   ```
+   127.0.0.1 weather.local
+   ```
+
+   then open 👉 http://weather.local
 
 ## Usage
 
