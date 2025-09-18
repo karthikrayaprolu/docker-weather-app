@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-app               # Deployment name
+spec:
+  replicas: 2                     # Run 2 pods for load balancing
+  selector:
+    matchLabels:
+      app: weather-app            # Match pods with this label
+  template:
+    metadata:
+      labels:
+        app: weather-app          # Apply same label to pod
+    spec:
+      containers:
+        - name: weather-app       # Container name
+          image: weather-app:1.0  # Use local built Docker image
+          imagePullPolicy: Never  # Don’t pull from DockerHub, use local
+          ports:
+            - containerPort: 80   # Expose Nginx inside pod

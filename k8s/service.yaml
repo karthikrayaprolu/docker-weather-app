@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-app-service     # Service name
+spec:
+  selector:
+    app: weather-app            # Match pods with this label
+  ports:
+    - port: 80                  # Expose service on port 80
+      targetPort: 80            # Forward to pod's port 80
+  type: ClusterIP               # Internal access only (default service type)
